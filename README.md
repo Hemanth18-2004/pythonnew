@@ -92,12 +92,6 @@ Open a Pull Request.
 
 ---
 
-## 📝 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
----
-
 <p align="center">
 Developed with ❤️ by <a href="https://github.com/Hemanth18-2004">Hemanth</a>
 </p>
