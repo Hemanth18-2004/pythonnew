@@ -15,13 +15,13 @@ A professional, structured collection of Python scripts and logic implementation
 
 ## 📂 Project Structure
 
-```plaintext
+```
 pythonnew/
-├── scripts/            # Individual utility and automation scripts
-├── modules/            # Reusable logic components and classes
-├── tests/              # Unit tests for script verification
-├── docs/               # Technical documentation
-└── requirements.txt    # List of project dependencies
+├── IOT/        # Programs related to IoT and data visualization
+├── unit_1/     # Python programs from Unit 1
+├── unit_2/     # Python programs from Unit 2
+├── unit_3/     # Python programs from Unit 3
+└── README.md   # Project documentation
 ```
 
 ---
