@@ -22,3 +22,22 @@ async def fetch(session, url):
             end = time.time()
             taken = round(end-start, 2)
             return url, resp.status, taken
+    except Exception:
+        end = time.time()
+        taken = round(end - start, 2)
+        return url, -1, taken
+        ''' -1 represents a failure status'''
+
+async def main():
+    async with aiohttp.ClientSession() as session:
+        ''' A single shared HTTP session is created '''
+        ''' It is reused for all the HTTP requests '''
+        results = await asyncio.gather(*(fetch(session, u) for u in URL))
+        ''' All fetch coroutines are scheduled together '''
+        ''' Execution waits until all requests are complete 
+            Waiting time is shared by all requests '''
+        
+        for url, status, taken in results:
+            print(f'URL {url} returned a status code {status} in {taken} seconds')
+    
+asyncio.run(main())
