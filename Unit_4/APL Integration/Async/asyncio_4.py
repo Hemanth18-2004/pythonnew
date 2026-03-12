@@ -52,3 +52,40 @@ def run_sync(start, end):
         print("Sync square of", i, "is", sq)
 
     return round(t1 - t0, 2)
+
+# -------------------------------------------------
+# USER INPUT
+# -------------------------------------------------
+
+start = int(input("Enter the starting value: "))
+end = int(input("Enter the ending value: "))
+
+
+# -------------------------------------------------
+# RUN ASYNC
+# -------------------------------------------------
+
+print("\nRunning asynchronous program")
+async_time = asyncio.run(run_async(start, end))
+print(f"Asynchronous total time {async_time} seconds\n")
+
+
+# -------------------------------------------------
+# RUN SYNC
+# -------------------------------------------------
+
+print("Running synchronous program")
+sync_time = run_sync(start, end)
+print(f"Synchronous total time {sync_time} seconds\n")
+
+
+# -------------------------------------------------
+# TIME COMPARISON
+# -------------------------------------------------
+
+print("Time difference")
+
+if sync_time > async_time:
+    print(f"Asynchronous was faster by {round(sync_time - async_time, 2)} seconds")
+else:
+    print(f"Synchronous was faster by {round(async_time - sync_time, 2)} seconds")
