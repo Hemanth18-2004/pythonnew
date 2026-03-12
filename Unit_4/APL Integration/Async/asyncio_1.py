@@ -9,3 +9,14 @@ async def Task(name, delay):
     end_t = time.strftime('%H:%M:%S')
     print(f'Task {name} completed execution at {end_t}')
     return name, end_t
+'''Coroutine execution is coordinated here'''
+async def main():
+    results = await asyncio.gather(
+        Task('A', 3),
+        Task('B', 0.5),
+        Task('C', 2)
+    )
+    print('Complete Summary Report')
+    for name, t in results:
+        print(f"Task {name} completed at {t:.2f} seconds")
+    asyncio.run(main())
