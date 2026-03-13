@@ -65,3 +65,59 @@ for row in rows:
 
 df=pd.DataFrame(list_row)
 print(df.head(10))
+
+#   Data Manipulation and Cleaning
+df1=df[0].str.split(',',expand=True)
+print(df1.head(5))
+
+# Remove the opening square braces
+df1[0]=df1[0].str.strip('[')
+print(df1.head(5))
+
+df1[4]=df1[4].str.strip(']')
+print(df1.head(5))
+
+#   Accessing the title for the cols
+col_labels=soup.find_all('th')
+print(col_labels)
+print('\n\n')
+print(type(col_labels))
+all_head=[]
+col_str=str(col_labels)
+clean_text=bs(col_str,'lxml').get_text() #Removes all the tags from the text
+all_head.append(clean_text)
+print(all_head)
+
+#   convert to df
+df2=pd.DataFrame(all_head)
+print(df2)
+
+#splitting
+df3=df2[0].str.split(',',expand=True)
+print(df3.head(5))
+
+# Remove the opening square braces
+df3[0]=df3[0].str.strip('[')
+df3[4]=df3[4].str.strip(']')
+print(df3.head(5))
+print("\n\n")
+
+#--------MERGE THE TWO DF------------
+frames=[df3,df1]
+df4=pd.concat(frames)
+print(df4.head(5))
+
+# -- Assign the 1st row to be the table header
+df5=df4.rename(columns=df4.iloc[0])
+print(df5.head(5))
+
+#---Drop all rows with missing vals
+df5=df5.dropna(axis=0,how='any')
+print(df5.head(5))
+
+#---Drop row 0
+df5=df5.drop(index=0)
+print(df5.head(5))
+print("\n")
+df5.info()
+print(df5.shape)
