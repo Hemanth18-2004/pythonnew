@@ -121,3 +121,78 @@ print(df5.head(5))
 print("\n")
 df5.info()
 print(df5.shape)
+
+
+#____Processing of DF_________
+
+#a. convert the finish time to total no of minutes.
+df5.columns = df5.columns.str.strip().str.replace('\n',' ', regex=False)
+
+time_mins = [
+    (int(h)*3600 + int(m)*60 + int(s)) / 60
+    for h,m,s in (t.split(':') for t in df5['FINISH TIME'])
+]
+
+# Convert Finish Time (HH:MM:SS) to total minutes
+
+#add the new col as run_mins
+df5['Run_mins'] = time_mins
+
+
+#a.--Get the mean time taken by each nationalty
+df5.groupby('NATIONALITY')['Run_mins'].mean()
+
+
+#b/---Find the no of runners per nationality
+df5['NATIONALITY'].value_counts()
+
+
+#c.---Get the difference of minutes between each runners
+df5['Diff_mins'] = df5['Run_mins'].diff()
+
+
+#d.Define the category of the runners based on the time taken
+df5['CATEGORY']=pd.cut(
+    df5['Run_mins'],
+    bins=[0,120,140,160,200],
+    labels=['Elite','Strong','Moderate','Slow']
+)
+print(df5)
+
+#____VISUALIZE THE DATA______
+
+plt.hist(df5['Run_mins'],bins=10)
+plt.xlabel('Minutes')
+plt.ylabel('Frequency')
+plt.show()
+
+#--create box plot for time duration
+plt.boxplot(df5['Run_mins'])
+plt.ylabel('Minutes')
+plt.show()
+
+#create bargraphs for each nationality 
+nat_c=df5['NATIONALITY'].value_counts()
+nat_c.plot(kind='bar')
+df5.groupby('NATIONALITY')['Run_mins'].mean().plot(kind='bar')
+plt.show()
+
+
+#create scatter plots
+plt.scatter(df5['RANK'],df5['Run_mins'])
+plt.xlabel('RANK')
+plt.ylabel('Finish time (mins)')
+plt.show()
+
+#create horizontal bar graphs
+top10=df5.nsmallest(10,'Run_mins')
+plt.barh(top10['NATIONALITY'],top10['Run_mins'])
+plt.show()
+
+top10=df5.nsmallest(10,'Run_mins')
+plt.barh(top10['NAME'],top10['Run_mins'])
+plt.show()
+
+#create line graphs
+plt.plot(df5['Run_mins'].expanding().mean())
+plt.show()
